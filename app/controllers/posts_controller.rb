@@ -3,11 +3,10 @@ class PostsController < ApplicationController
     @posts = Post.all.order(id: "DESC")
   end
   def create
-    Post.create(content: params[:content])
-    redirect_to action: :index
-  end
+    post = Post.create(content:params[:content], checked: false)
+    render json:{post:post} 
+  end #この上記の二つでメモ作成時に未読の情報を保存するようにしたこととAjaxを実現するためにレスポンスをjsonに変更したこと
   def checked
-
     post = Post.find(params[:id])
     if post.checked then
       post.update(checked: false)
